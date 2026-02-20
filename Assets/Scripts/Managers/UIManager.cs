@@ -1,18 +1,15 @@
 using Game.Enum;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
     Dictionary<Phase, PhaseUI> _phaseUI = new();
-    PhaseUI _lastPhaseUI;
 
     private void Awake()
     {
         var uis = Resources.LoadAll<UIBase>("UIs/");
 
-        Debug.Log(uis.Length);
         foreach (var ui in uis)
         {
             if (ui is PhaseUI)
@@ -20,7 +17,8 @@ public class UIManager : Singleton<UIManager>
                 var phase = ui as PhaseUI;
                 _phaseUI[phase.Phase] = phase;
 
-                GameManager.Instance.AddListener(phase.Phase, () => ShowPhaseUI(phase.Phase));
+                GameManager.Instance.AddListener(phase.Phase, false, () => HidePhaseUI(phase.Phase));
+                GameManager.Instance.AddListener(phase.Phase, true, () => ShowPhaseUI(phase.Phase));
             }
         }
     }
@@ -43,18 +41,19 @@ public class UIManager : Singleton<UIManager>
             Debug.LogError("UI를 찾을 수 없습니다.");
         }
 
-        if (_lastPhaseUI != null)
-        {
-            _lastPhaseUI.gameObject.SetActive(false);
-        }
-
         if (!ui.gameObject.scene.IsValid())
         {
             ui = Instantiate(ui);
         }
 
-        _lastPhaseUI = ui;
-
         ui.gameObject.SetActive(true);
+    }
+    public void HidePhaseUI(Phase phase)
+    {
+        if (!_phaseUI.TryGetValue(phase, out PhaseUI ui)) return;
+
+        if (!ui.gameObject.scene.IsValid()) return;
+
+        ui.gameObject.SetActive(false);
     }
 }

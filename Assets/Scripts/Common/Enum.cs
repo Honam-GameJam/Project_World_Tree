@@ -10,4 +10,11 @@ namespace Game.Enum
         CheckWorldTree,
         GameResult,
     }
+
+    public enum PacketType
+    {
+        TravelSelection,
+        ChangeMoney,
+        GetItem,
+    }
 }

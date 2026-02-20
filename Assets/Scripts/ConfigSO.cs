@@ -1,0 +1,7 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "ConfigSO", menuName = "Scriptable Objects/ConfigSO")]
+public class ConfigSO : ScriptableObject
+{
+    [field: SerializeField] public float DefaultTravelSelectionTime { get; private set; } = 30;
+}
