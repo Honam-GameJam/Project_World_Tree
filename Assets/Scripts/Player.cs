@@ -1,10 +1,14 @@
-public class Player
+namespace Game.Data
 {
-    public readonly int ID;
+    public class Player
 
-    public Player(int sessionId)
     {
-        ID = sessionId;
+        public readonly int ID;
 
+        public Player(int sessionId)
+        {
+            ID = sessionId;
+
+        }
     }
 }
