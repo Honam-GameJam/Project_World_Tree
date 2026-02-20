@@ -12,7 +12,6 @@ public class UIManager : Singleton<UIManager>
     {
         var uis = Resources.LoadAll<UIBase>("UIs/");
 
-        Debug.Log(uis.Length);
         foreach (var ui in uis)
         {
             if (ui is PhaseUI)
