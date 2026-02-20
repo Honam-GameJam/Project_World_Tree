@@ -113,7 +113,7 @@ namespace Com.MyCompany.MyGame
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             Debug.Log($"OnPlayerEnteredRoom: {newPlayer.NickName} Players: {PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}");
-
+ 
             // 새로운 플레이어가 들어올 때마다 체크
             TryStartGame();
         }

@@ -1,14 +1,19 @@
 namespace Game.Data
 {
     public class Player
-
     {
-        public readonly int ID;
+        public readonly int ActorNumber;
+        public string Name;
+        public bool hasSelected;
+        public int AreaIndex;
+        public int Money;
+        public int[] Inventory;
 
-        public Player(int sessionId)
+        public Player(int actorNumber, string name)
         {
-            ID = sessionId;
-
+            ActorNumber = actorNumber;
+            Name = name;
+            Inventory = new int[6];
         }
     }
 }
