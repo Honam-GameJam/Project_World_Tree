@@ -20,5 +20,6 @@ namespace Game.Enum
         GetItem,
         ItemSubmit,
         Chat,
+        VoteConfirm,
     }
 }
