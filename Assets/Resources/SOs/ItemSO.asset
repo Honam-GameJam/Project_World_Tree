@@ -18,42 +18,42 @@ MonoBehaviour:
     <Description>k__BackingField: "\uC740\uAD11\uC11D\uC774\uB2E4."
     <AreaIndex>k__BackingField: 0
     <Value>k__BackingField: 1
-    <Weight>k__BackingField: 6
+    <Weight>k__BackingField: 2
     <Sprite>k__BackingField: {fileID: 5908594964959160618, guid: 1cde167d3a9a85743908e15306b4b270, type: 3}
   - <ID>k__BackingField: 2
     <Name>k__BackingField: "\uAE08\uAD11\uC11D"
     <Description>k__BackingField: "\uAE08\uAD11\uC11D\uC774\uB2E4."
     <AreaIndex>k__BackingField: 0
     <Value>k__BackingField: 2
-    <Weight>k__BackingField: 3
+    <Weight>k__BackingField: 6
     <Sprite>k__BackingField: {fileID: 3603661283906637374, guid: 1cde167d3a9a85743908e15306b4b270, type: 3}
   - <ID>k__BackingField: 3
     <Name>k__BackingField: "\uC6D0\uC11D"
     <Description>k__BackingField: "\uC6D0\uC11D\uC774\uB2E4."
     <AreaIndex>k__BackingField: 0
     <Value>k__BackingField: 4
-    <Weight>k__BackingField: 1
+    <Weight>k__BackingField: 2
     <Sprite>k__BackingField: {fileID: 2827095338970573629, guid: 1cde167d3a9a85743908e15306b4b270, type: 3}
   - <ID>k__BackingField: 4
     <Name>k__BackingField: "\uB3D9\uAD34"
     <Description>k__BackingField: "\uB3D9\uAD34\uC774\uB2E4."
     <AreaIndex>k__BackingField: 1
     <Value>k__BackingField: 1
-    <Weight>k__BackingField: 5
+    <Weight>k__BackingField: 2
     <Sprite>k__BackingField: {fileID: 1027520991577621970, guid: 1cde167d3a9a85743908e15306b4b270, type: 3}
   - <ID>k__BackingField: 5
     <Name>k__BackingField: "\uC740\uAD34"
     <Description>k__BackingField: "\uC740\uAD34\uC774\uB2E4."
     <AreaIndex>k__BackingField: 1
     <Value>k__BackingField: 2
-    <Weight>k__BackingField: 3
+    <Weight>k__BackingField: 4
     <Sprite>k__BackingField: {fileID: -3791125636489488789, guid: 1cde167d3a9a85743908e15306b4b270, type: 3}
   - <ID>k__BackingField: 6
     <Name>k__BackingField: "\uAE08\uAD34"
     <Description>k__BackingField: "\uAE08\uAD34\uC774\uB2E4."
     <AreaIndex>k__BackingField: 1
     <Value>k__BackingField: 3
-    <Weight>k__BackingField: 2
+    <Weight>k__BackingField: 4
     <Sprite>k__BackingField: {fileID: 6400505213306290341, guid: 1cde167d3a9a85743908e15306b4b270, type: 3}
   - <ID>k__BackingField: 7
     <Name>k__BackingField: "\uC6D0\uBAA9"
