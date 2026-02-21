@@ -1,5 +1,7 @@
 using Game.Enum;
 using Photon.Pun;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 
 public class TravelSelectionPacket : RPCPacket
 {
@@ -16,7 +18,14 @@ public class TravelSelectionPacket : RPCPacket
 
     public override void Send()
     {
-        RPCManager.Instance.photonView.RPC(nameof(RPCManager.RPC_Request), RpcTarget.MasterClient, type, new object[] { ActorNumber, SelectionIndex});
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            RPCManager.Instance.photonView.RPC(nameof(RPCManager.RPC_Request), RpcTarget.MasterClient, type, new object[] { ActorNumber, SelectionIndex });
+        }
+        else if (Check())
+        {
+            RPCManager.Instance.photonView.RPC(nameof(RPCManager.RPC_Apply), RpcTarget.All, type, new object[] { ActorNumber, SelectionIndex });
+        }
     }
 
     public override bool Check()

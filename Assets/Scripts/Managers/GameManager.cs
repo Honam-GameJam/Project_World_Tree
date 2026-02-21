@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    private bool _canStartGame;
     public Phase Phase { get; private set; }
 
     private Dictionary<(Phase, bool), Action> _phaseEvents = new();
@@ -15,7 +14,10 @@ public class GameManager : Singleton<GameManager>
     //Master Client
     private Dictionary<int, Player> _players = new();
 
-    int _actorNumber;
+    public IReadOnlyCollection<Player> Players => _players.Values;
+    public Player Player => _players[_actorNumber];
+
+    private int _actorNumber;
 
     public void InitPlayers()
     {
@@ -30,22 +32,7 @@ public class GameManager : Singleton<GameManager>
         _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
     }
 
-    public void Ready()
-    {
-
-    }
-
-    public void GameStart()
-    {
-        if (!_canStartGame) Debug.Log("게임을 시작할 수 없습니다.");
-
-        SetPhase(Phase.TravelSelection);
-    }
-
-    public void ClickArea(int index)
-    {
-        RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
-    }
+    public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
 
     public void ClickArea(int actorNumber, int index)
     {
@@ -55,6 +42,18 @@ public class GameManager : Singleton<GameManager>
         player.hasSelected = true;
 
         CheckAllPlayersSelected();
+    }
+
+    public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
+
+    public void SendChat(int actorNumber, string chat)
+    {
+        if (_players.TryGetValue(actorNumber, out var player)) {
+            if (player.AreaIndex != Player.AreaIndex) return;
+
+            // No...
+            UIManager.Instance.HUD.ReceiveChat(player.Icon, actorNumber == _actorNumber, chat);
+        }
     }
 
     private void CheckAllPlayersSelected()

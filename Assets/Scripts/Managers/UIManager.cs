@@ -1,10 +1,12 @@
 using Game.Enum;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
-    Dictionary<Phase, PhaseUI> _phaseUI = new();
+    private Dictionary<Phase, PhaseUI> _phaseUI = new();
+    public HUD HUD { get; private set; }
 
     private void Awake()
     {
@@ -20,18 +22,13 @@ public class UIManager : Singleton<UIManager>
                 GameManager.Instance.AddListener(phase.Phase, false, () => HidePhaseUI(phase.Phase));
                 GameManager.Instance.AddListener(phase.Phase, true, () => ShowPhaseUI(phase.Phase));
             }
-        }
-    }
 
-    public PhaseUI GetPhaseUI(Phase phase)
-    {
-        if (!_phaseUI.TryGetValue(phase, out PhaseUI ui))
-        {
-            Debug.LogError("UI를 찾을 수 없습니다.");
-            return null;
+            if (ui is HUD)
+            {
+                HUD = Instantiate(ui as HUD);
+                GameManager.Instance.AddListener(Phase.Travel, true, () => gameObject.SetActive(true));
+            }
         }
-
-        return ui;
     }
 
     public void ShowPhaseUI(Phase phase)
@@ -44,6 +41,7 @@ public class UIManager : Singleton<UIManager>
         if (!ui.gameObject.scene.IsValid())
         {
             ui = Instantiate(ui);
+            _phaseUI[phase] = ui;
         }
 
         ui.gameObject.SetActive(true);
