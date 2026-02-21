@@ -10,4 +10,5 @@ public class Item
     [field: SerializeField] public int AreaIndex { get; private set; }
     [field: SerializeField] public int Value { get; private set; }
     [field: SerializeField] public int Weight { get; private set; }
+    [field: SerializeField] public Sprite Sprite { get; private set; }
 }
