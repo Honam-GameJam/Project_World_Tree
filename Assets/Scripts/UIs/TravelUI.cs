@@ -22,7 +22,7 @@ public class TravelUI : PhaseUI
             _options[index].onClick.AddListener(() => SelectOption(index));
         }
 
-        Init(GameManager.Instance.config.DefaultTravelTime);
+        Init(GameManager.Instance.Config.DefaultTravelTime);
     }
 
     public void Init(float time)
@@ -67,7 +67,10 @@ public class TravelUI : PhaseUI
 
     public void SelectOption(int index)
     {
+        if (GameManager.Instance.Player.AreaIndex != 4
+            && index == 1 && GameManager.Instance.Player.Money < 2) return;
         GameManager.Instance.SelectOption(index);
-        GameManager.Instance.SetPhase(Game.Enum.Phase.GoHome);
+
+        GameManager.Instance.AsyncPhase();
     }
 }

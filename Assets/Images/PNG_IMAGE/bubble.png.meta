@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: d704c07d66403ae479804617b3d0d8cb
+guid: b3913d46e4e989942b7db6dca50174bd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2099905247736179763
-    second: 73acdbf6-e7b7-41ff-b8a4-926898a4f2ee_0
+      213: -9136834448258697486
+    second: bubble_0
+  - first:
+      213: 1762854388791719718
+    second: bubble_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +103,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 73acdbf6-e7b7-41ff-b8a4-926898a4f2ee_0
+      name: bubble_mine
       rect:
         serializedVersion: 2
-        x: 23
-        y: 187
-        width: 1491
-        height: 652
+        x: 3
+        y: 420
+        width: 1247
+        height: 357
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 727, y: 338, z: 744, w: 300}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 33c2b4172bc542d10800000000000000
-      internalID: 2099905247736179763
+      spriteID: 2f6fcf37a71733180800000000000000
+      internalID: -9136834448258697486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bubble_other
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 20
+        width: 1247
+        height: 357
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6273ba20abae67810800000000000000
+      internalID: 1762854388791719718
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b6e579eb7192f114396e2b5eb9503e50
+    spriteID: 587b7c311b124f74d8fe5f7f3f909ab4
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      73acdbf6-e7b7-41ff-b8a4-926898a4f2ee_0: 2099905247736179763
+      bubble_mine: -9136834448258697486
+      bubble_other: 1762854388791719718
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

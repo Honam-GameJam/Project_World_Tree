@@ -1,5 +1,6 @@
 using Game.Enum;
 using Photon.Pun;
+using System;
 
 public class GetItemPacket : RPCPacket
 {
@@ -30,13 +31,40 @@ public class GetItemPacket : RPCPacket
     {
         if (!PhotonNetwork.IsMasterClient) return false;
 
+        var player = GameManager.Instance.FindPlayer(ActorNumber);
 
+        if (player == null) return false;
 
-        return true;
+        if (player.AreaIndex == 4) // ÈÞ½Ä
+        {
+            RPCPacketFactory.Create(PacketType.ChangeMoney, ActorNumber, 1);
+            return false;
+        }
+
+        int itemSize = Index == 0 ? 1 : 2;
+        if (Index == 1) {
+            if (player.Money < 2) return false;
+            RPCPacketFactory.Create(PacketType.ChangeMoney, ActorNumber, -2);
+        }
+
+        int empty = 6;
+
+        foreach (var slot in player.Inventory) if (slot != -1) empty--;
+
+        itemSize = Math.Min(itemSize, empty);
+        var items = new int[itemSize];
+
+        for (int i = 0; i < itemSize; i++)
+        {
+            items[i] = GameManager.Instance.Items.GetAreaItem(player.AreaIndex).ID;
+        }
+
+        RPCManager.Instance.photonView.RPC(nameof(RPCManager.RPC_Apply), RpcTarget.All, PacketType.GiveItem, new object[] { ActorNumber, items });
+
+        return false;
     }
 
     public override void Response()
     {
-
     }
 }

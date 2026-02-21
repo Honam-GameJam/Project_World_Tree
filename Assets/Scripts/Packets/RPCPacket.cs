@@ -1,5 +1,4 @@
 using Game.Enum;
-using NUnit.Framework;
 
 public static class RPCPacketFactory
 {
@@ -21,10 +20,29 @@ public static class RPCPacketFactory
                 return new ItemSubmitPacket(
                     (int)parameters[0],
                     (int[])parameters[1]);
+
             case PacketType.VoteConfirm:
                 return new VoteConfirmPacket(
                     (int)parameters[0],
                     (int[])parameters[1]);
+
+            case PacketType.AsyncPhase:
+                return new AsyncPhasePacket(
+                    (int)parameters[0]);
+
+            case PacketType.GetItem:
+                return new GetItemPacket(
+                    (int)parameters[0],
+                    (int)parameters[1]);
+
+            case PacketType.GiveItem:
+                return new GiveItemPacket(
+                    (int)parameters[0],
+                    (int[])parameters[1]);
+
+            case PacketType.SetLeader:
+                return new SetLeaderPacket(
+                    (int)parameters[0]);
         }
 
         return null;

@@ -3,6 +3,9 @@ using Game.Enum;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using static Photon.Pun.Demo.Shared.DocLinks;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -12,6 +15,7 @@ public class GameManager : Singleton<GameManager>
 
     //Master Client
     private Dictionary<int, Player> _players = new();
+    private Dictionary<int, int> _products = new();
 
     public IReadOnlyCollection<Player> Players => _players.Values;
     public Player Player => _players[_actorNumber];
@@ -19,14 +23,29 @@ public class GameManager : Singleton<GameManager>
 
     private int _actorNumber;
 
-    public int Round { get; private set; }
-    public ConfigSO config;
+    private int _travelCount;
+    public bool _mustTravel => _travelCount < Config.TravelCycle - 1;
+    public int Round { get; private set; } = 1;
+    public ItemSO Items;
+    public ConfigSO Config;
+
+    private void Awake()
+    {
+        Items = Resources.Load<ItemSO>("SOs/ItemSO");
+        Config = Resources.Load<ConfigSO>("SOs/ConfigSO");
+    }
+
+    private void Start()
+    {
+        AddListener(Phase.TravelSelection, true, () => _travelCount++);
+        AddListener(Phase.Vote, true, () => _travelCount = 0);
+    }
 
     public void InitPlayers()
     {
         foreach(var p in PhotonNetwork.CurrentRoom.Players.Values)
         {
-            var player = new Player(p.ActorNumber, p.NickName);
+            var player = new Player(p.ActorNumber, p.NickName, Config.DefaultMoney);
             _players[p.ActorNumber] = player;
 
             AddListener(Phase.TravelSelection, true, () => player.hasSelected = false);
@@ -35,24 +54,48 @@ public class GameManager : Singleton<GameManager>
         _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
     }
 
+    public void SetLeader()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        int leader = _actorNumber;
+
+        if (Round == 1)
+        {
+            leader = UnityEngine.Random.Range(0, _players.Count);
+        }
+        else
+        {
+            int maxMoney = -1;
+
+            foreach(var player in Players)
+            {
+                if (maxMoney < player.Money) {
+                    leader = player.ActorNumber;
+                    maxMoney = player.Money;
+                }
+            }
+        }
+
+        RPCPacketFactory.Create(PacketType.SetLeader, leader).Send();
+    }
     public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
     public void SubmitItem() => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, Player.Ship).Send();
-    public void SelectOption(int index) => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, index).Send();
+    public void SelectOption(int index) => RPCPacketFactory.Create(PacketType.GetItem, _actorNumber, index).Send();
+    public void AsyncPhase() => RPCPacketFactory.Create(PacketType.AsyncPhase, _actorNumber).Send();
 
     public void ClickItem(int index, bool isInventory)
     {
         if (isInventory)
         {
-            var itemId = Player.Inventory[index];
-            Player.Inventory[index] = -1;
-
             for (int i = 0; i < Player.Ship.Length; i++)
             {
                 if (Player.Ship[i] == -1)
                 {
-                    Player.Ship[i] = itemId;
+                    Player.Ship[i] = Player.Inventory[index];
+                    Player.Inventory[index] = -1;
                     break;
                 }
             }
@@ -73,6 +116,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         UIManager.Instance.hud.UpdateInventory();
+        UIManager.Instance.ship.UpdateInventory();
     }
 
 
@@ -88,19 +132,48 @@ public class GameManager : Singleton<GameManager>
 
         if (selected) { } //바로 시작?
     }
-
     public void SetPhase(Phase phase)
     {
         if (_phaseEvents.TryGetValue((Phase, false), out Action entry))
         {
-            entry.Invoke();
+            entry?.Invoke();
         }
 
         Phase = phase;
 
-        if (_phaseEvents.TryGetValue((phase, true), out entry))
+        if (_phaseEvents.TryGetValue((Phase, true), out entry))
         {
-            entry.Invoke();
+            entry?.Invoke();
+        }
+    }
+
+    public void AddProducts(int[] products)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        foreach (int product in products)
+        {
+            if (!_products.ContainsKey(product))
+                _products[product] = 0;
+
+            _products[product]++;
+        }
+    }
+
+    public void CaculateMoney()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        int v = 0;
+        foreach ((int id, int count) in _products)
+        {
+            v += Items.GetItem(id).Value * count;
+        }
+
+        foreach (var player in Players)
+        {
+            if (player.HasShipTicket)
+                RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, v/4).Send();
         }
     }
 
@@ -109,11 +182,11 @@ public class GameManager : Singleton<GameManager>
         if (_phaseEvents.TryGetValue((phase, onEntered), out Action entry))
         {
             entry += action;
+            _phaseEvents[(phase, onEntered)] = entry;
         }
         else
         {
-            entry = action;
-            _phaseEvents.Add((phase, onEntered), entry);
+            _phaseEvents.Add((phase, onEntered), action);
         }
     }
 
@@ -122,6 +195,7 @@ public class GameManager : Singleton<GameManager>
         if (_phaseEvents.TryGetValue((phase, onEntered), out Action entry))
         {
             entry -= action;
+            _phaseEvents[(phase, onEntered)] = entry;
         }
     }
 }
