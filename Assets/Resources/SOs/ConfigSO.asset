@@ -17,3 +17,12 @@ MonoBehaviour:
   <DefaultTravelTime>k__BackingField: 30
   <Round>k__BackingField: 5
   <TravelCycle>k__BackingField: 2
+  <MaxPlayer>k__BackingField: 6
+  <VotedPlayer>k__BackingField: 4
+  <Icons>k__BackingField:
+  - {fileID: -3164809056393425246, guid: 23963ca4e71f46648ad747f81d66a709, type: 3}
+  - {fileID: -5225540622116197949, guid: 17f450183578d6f4da7c7f0cc25127f5, type: 3}
+  - {fileID: 8793915729297761979, guid: a494d1187d1feb9488e07c2a50ea5928, type: 3}
+  - {fileID: 2750298860172458669, guid: e968471938b0301458abf174327067b5, type: 3}
+  - {fileID: -2276259661975475453, guid: 732731351a59e214abf9147a5cb551c9, type: 3}
+  - {fileID: 141893073332109768, guid: 79e222ab973cce94e9ca890029750ec8, type: 3}
