@@ -38,6 +38,8 @@ public class VoteConfirmPacket : RPCPacket
 
     public override void Response()
     {
-        GameManager.Instance.FindPlayer(ActorNumber).hasShipTicket = true;
+        var player = GameManager.Instance.FindPlayer(ActorNumber);
+        player.hasShipTicket = true;
+        player.isLeader = false;
     }
 }

@@ -3,6 +3,7 @@ using Game.Enum;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -22,6 +23,11 @@ public class GameManager : Singleton<GameManager>
     public int Round { get; private set; }
     public ConfigSO config;
 
+    private void Awake()
+    {
+        config = Resources.Load<ConfigSO>("SOs/ConfigSO");
+    }
+
     public void InitPlayers()
     {
         foreach(var p in PhotonNetwork.CurrentRoom.Players.Values)
@@ -40,6 +46,7 @@ public class GameManager : Singleton<GameManager>
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
     public void SubmitItem() => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, Player.Ship).Send();
     public void SelectOption(int index) => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, index).Send();
+    public void AsyncPhase() => RPCPacketFactory.Create(PacketType.AsyncPhase, _actorNumber).Send();
 
     public void ClickItem(int index, bool isInventory)
     {

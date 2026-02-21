@@ -21,5 +21,6 @@ namespace Game.Enum
         ItemSubmit,
         Chat,
         VoteConfirm,
+        AsyncPhase,
     }
 }

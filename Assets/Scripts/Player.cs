@@ -14,6 +14,7 @@ namespace Game.Data
         public int[] Inventory;
         public int[] Ship;
         public bool hasShipTicket;
+        public bool isActionFinished;
 
         public Player(int actorNumber, string name)
         {

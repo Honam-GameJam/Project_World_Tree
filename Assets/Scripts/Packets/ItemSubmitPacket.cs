@@ -73,5 +73,7 @@ public class ItemSubmitPacket : RPCPacket
                 }
             }
         }
+
+        player.hasShipTicket = false;
     }
 }

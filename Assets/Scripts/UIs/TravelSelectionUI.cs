@@ -35,7 +35,7 @@ public class TravelSelectionUI : PhaseUI
         if (_time < 0f)
         {
             _isTimeOver = true;
-            GameManager.Instance.SetPhase(Game.Enum.Phase.Travel);
+            GameManager.Instance.AsyncPhase();
         }
 
         _time -= Time.deltaTime;

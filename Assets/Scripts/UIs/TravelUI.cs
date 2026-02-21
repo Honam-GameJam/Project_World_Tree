@@ -68,6 +68,6 @@ public class TravelUI : PhaseUI
     public void SelectOption(int index)
     {
         GameManager.Instance.SelectOption(index);
-        GameManager.Instance.SetPhase(Game.Enum.Phase.GoHome);
+        GameManager.Instance.AsyncPhase();
     }
 }
