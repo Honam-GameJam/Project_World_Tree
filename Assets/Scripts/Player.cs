@@ -10,7 +10,7 @@ namespace Game.Data
         public bool hasSelected;
         public int AreaIndex;
         public int Money;
-        public int isLeader;
+        public bool isLeader;
         public int[] Inventory;
         public int[] Ship;
         public bool hasShipTicket;

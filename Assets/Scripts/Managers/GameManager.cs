@@ -36,14 +36,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
-
-    public void DeliverSelectionArray(int actorNumber, int[] selectionArr)
-    {
-        if (!_players.TryGetValue(actorNumber, out var player))
-            return;
-        
-        //has ship ticket ±¸Çö.
-    }
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
     public void SubmitItem() => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, Player.Ship).Send();
