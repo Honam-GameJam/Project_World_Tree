@@ -11,12 +11,15 @@ namespace Game.Data
         public int AreaIndex;
         public int Money;
         public int[] Inventory;
+        public int[] Ship;
+        public bool hasShipTicket;
 
         public Player(int actorNumber, string name)
         {
             ActorNumber = actorNumber;
             Name = name;
             Inventory = new int[6];
+            Ship = new int[3];
         }
     }
 }

@@ -7,11 +7,9 @@ public class TravelUI : PhaseUI
 {
     [SerializeField] private List<PlayerProfile> _profiles;
 
-    [SerializeField] private Button _basicOption;
-    [SerializeField] private Button _betterOption;
+    [SerializeField] private List<Button> _options;
 
     [SerializeField] private TextMeshProUGUI _timer;
-    [SerializeField] private ConfigSO _config;
 
     private int _curMember;
     private float _time;
@@ -19,10 +17,12 @@ public class TravelUI : PhaseUI
 
     private void Awake()
     {
-        _basicOption.onClick.AddListener(null);
-        _betterOption.onClick.AddListener(null);
+        for (int i = 0; i < _options.Count; i++) {
+            int index = i;
+            _options[index].onClick.AddListener(() => SelectOption(index));
+        }
 
-        Init(_config.DefaultTravelTime);
+        Init(GameManager.Instance.config.DefaultTravelTime);
     }
 
     public void Init(float time)
@@ -58,10 +58,16 @@ public class TravelUI : PhaseUI
         if (_time < 0f)
         {
             _isTimeOver = true;
-            GameManager.Instance.SetPhase(Game.Enum.Phase.Travel);
+            SelectOption(0);
         }
 
         _time -= Time.deltaTime;
         _timer.text = Mathf.CeilToInt(_time).ToString();
+    }
+
+    public void SelectOption(int index)
+    {
+        GameManager.Instance.SelectOption(index);
+        GameManager.Instance.SetPhase(Game.Enum.Phase.GoHome);
     }
 }

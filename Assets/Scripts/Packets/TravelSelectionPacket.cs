@@ -1,7 +1,5 @@
 using Game.Enum;
 using Photon.Pun;
-using System.Net.Sockets;
-using System.Security.Cryptography;
 
 public class TravelSelectionPacket : RPCPacket
 {
@@ -37,6 +35,13 @@ public class TravelSelectionPacket : RPCPacket
 
     public override void Response()
     {
-        GameManager.Instance.ClickArea(ActorNumber, SelectionIndex);
+        var player = GameManager.Instance.FindPlayer(ActorNumber);
+
+        if (player == null) return;
+
+        player.AreaIndex = SelectionIndex;
+        player.hasSelected = true;
+
+        GameManager.Instance.CheckAllPlayersSelected();
     }
 }

@@ -3,7 +3,6 @@ using Game.Enum;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -16,8 +15,12 @@ public class GameManager : Singleton<GameManager>
 
     public IReadOnlyCollection<Player> Players => _players.Values;
     public Player Player => _players[_actorNumber];
+    public Player FindPlayer(int actorNumber) => _players.ContainsKey(actorNumber) ? _players[actorNumber] : null;
 
     private int _actorNumber;
+
+    public int Round { get; private set; }
+    public ConfigSO config;
 
     public void InitPlayers()
     {
@@ -33,30 +36,46 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
-
-    public void ClickArea(int actorNumber, int index)
-    {
-        if (!_players.TryGetValue(actorNumber, out Player player)) return;
-
-        player.AreaIndex = index;
-        player.hasSelected = true;
-
-        CheckAllPlayersSelected();
-    }
-
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
+    public void SubmitItem() => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, Player.Ship).Send();
+    public void SelectOption(int index) => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, index).Send();
 
-    public void SendChat(int actorNumber, string chat)
+    public void ClickItem(int index, bool isInventory)
     {
-        if (_players.TryGetValue(actorNumber, out var player)) {
-            if (player.AreaIndex != Player.AreaIndex) return;
+        if (isInventory)
+        {
+            var itemId = Player.Inventory[index];
+            Player.Inventory[index] = -1;
 
-            // No...
-            UIManager.Instance.HUD.ReceiveChat(player.Icon, actorNumber == _actorNumber, chat);
+            for (int i = 0; i < Player.Ship.Length; i++)
+            {
+                if (Player.Ship[i] == -1)
+                {
+                    Player.Ship[i] = itemId;
+                    break;
+                }
+            }
         }
+        else
+        {
+            var itemId = Player.Ship[index];
+            Player.Ship[index] = -1;
+
+            for (int i = 0; i < Player.Inventory.Length; i++)
+            {
+                if (Player.Inventory[i] == -1)
+                {
+                    Player.Inventory[i] = itemId;
+                    break;
+                }
+            }
+        }
+
+        UIManager.Instance.hud.UpdateInventory();
     }
 
-    private void CheckAllPlayersSelected()
+
+    public void CheckAllPlayersSelected()
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
