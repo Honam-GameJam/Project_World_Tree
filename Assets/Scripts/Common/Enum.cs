@@ -16,5 +16,6 @@ namespace Game.Enum
         TravelSelection,
         ChangeMoney,
         GetItem,
+        Chat,
     }
 }

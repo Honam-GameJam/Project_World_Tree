@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 231174771101088764}
   - component: {fileID: 1160018910586152936}
   - component: {fileID: 3694354711726615878}
+  - component: {fileID: -7510795615902155502}
   m_Layer: 5
   m_Name: TravelUI
   m_TagString: Untagged
@@ -102,6 +103,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &-7510795615902155502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787069740968575538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f55539dcd45bc89489d2970d5ec8ec7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhaseUI
+  <Phase>k__BackingField: 2
 --- !u!1 &1525390898370343672
 GameObject:
   m_ObjectHideFlags: 0
