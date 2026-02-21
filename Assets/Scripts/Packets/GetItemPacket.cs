@@ -35,7 +35,18 @@ public class GetItemPacket : RPCPacket
 
         if (player == null) return false;
 
-        int itemSize = Index == 0 ? 1 : 3;
+        if (player.AreaIndex == 4) // ÈÞ½Ä
+        {
+            RPCPacketFactory.Create(PacketType.ChangeMoney, ActorNumber, 1);
+            return false;
+        }
+
+        int itemSize = Index == 0 ? 1 : 2;
+        if (Index == 1) {
+            if (player.Money < 2) return false;
+            RPCPacketFactory.Create(PacketType.ChangeMoney, ActorNumber, -2);
+        }
+
         int empty = 6;
 
         foreach (var slot in player.Inventory) if (slot != -1) empty--;

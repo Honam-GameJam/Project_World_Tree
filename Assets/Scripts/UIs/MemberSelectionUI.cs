@@ -10,7 +10,7 @@ public class MemberSelectionUI : PhaseUI
     [SerializeField] private TextMeshProUGUI _count;
 
     //선택된 인원 리스트로 저장
-    private int[] selectionArr = new int[GameManager.Instance.Config.MaxPlayer];
+    private int[] selectionArr;
     private int selectionCnt = 0;
 
     private void Awake()
@@ -22,6 +22,7 @@ public class MemberSelectionUI : PhaseUI
         }
 
         _confirmBtn.onClick.AddListener(Confirm);
+        selectionArr = new int[GameManager.Instance.Config.VotedPlayer];
         UpdateCount();
     }
 

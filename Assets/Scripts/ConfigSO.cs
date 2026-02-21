@@ -9,4 +9,5 @@ public class ConfigSO : ScriptableObject
     [field: SerializeField] public int Round { get; private set; } = 5;
     [field: SerializeField] public int TravelCycle { get; private set; } = 2;
     [field: SerializeField] public int MaxPlayer { get; private set; } = 6;
+    [field: SerializeField] public int VotedPlayer { get; private set; } = 4;
 }

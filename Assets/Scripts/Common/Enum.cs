@@ -23,5 +23,6 @@ namespace Game.Enum
         VoteConfirm,
         AsyncPhase,
         GiveItem,
+        SetLeader,
     }
 }

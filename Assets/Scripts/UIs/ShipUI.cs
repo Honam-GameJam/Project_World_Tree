@@ -23,4 +23,12 @@ public class ShipUI : PhaseUI
     {
         GameManager.Instance.SubmitItem();
     }
+
+    public void UpdateInventory()
+    {
+        for (int i = 0; i < _inventory.Count; i++)
+        {
+            _inventory[i].UpdateItem(GameManager.Instance.Player.Ship[i]);
+        }
+    }
 }

@@ -39,6 +39,10 @@ public static class RPCPacketFactory
                 return new GiveItemPacket(
                     (int)parameters[0],
                     (int[])parameters[1]);
+
+            case PacketType.SetLeader:
+                return new SetLeaderPacket(
+                    (int)parameters[0]);
         }
 
         return null;

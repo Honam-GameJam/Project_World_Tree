@@ -6,6 +6,7 @@ public class UIManager : Singleton<UIManager>
 {
     private Dictionary<Phase, PhaseUI> _phaseUI = new();
     public HUD hud { get; private set; }
+    public ShipUI ship => _phaseUI[Phase.Feed] as ShipUI;
 
     private void Awake()
     {

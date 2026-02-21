@@ -67,6 +67,8 @@ public class TravelUI : PhaseUI
 
     public void SelectOption(int index)
     {
+        if (GameManager.Instance.Player.AreaIndex != 4
+            && index == 1 && GameManager.Instance.Player.Money < 2) return;
         GameManager.Instance.SelectOption(index);
 
         GameManager.Instance.AsyncPhase();

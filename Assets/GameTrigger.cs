@@ -1,5 +1,4 @@
 using Game.Enum;
-using Photon.Pun;
 using UnityEngine;
 
 public class GameTrigger : MonoBehaviour

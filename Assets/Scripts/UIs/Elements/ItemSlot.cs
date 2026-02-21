@@ -13,8 +13,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     private bool _isClickable;
     private bool _isInventory;
 
-    public void Init(int _slotIndex, bool isInventory)
+    public void Init(int slotIndex, bool isInventory)
     {
+        _slotIndex = slotIndex;
         _isInventory = isInventory;
         _isEmpty = true;
     }

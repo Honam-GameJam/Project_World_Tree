@@ -25,7 +25,7 @@ public class GameManager : Singleton<GameManager>
 
     private int _travelCount;
     public bool _mustTravel => _travelCount < Config.TravelCycle - 1;
-    public int Round { get; private set; }
+    public int Round { get; private set; } = 1;
     public ItemSO Items;
     public ConfigSO Config;
 
@@ -51,12 +51,34 @@ public class GameManager : Singleton<GameManager>
             AddListener(Phase.TravelSelection, true, () => player.hasSelected = false);
         }
 
-        var leader = UnityEngine.Random.Range(0, _players.Count);
-        _players.Values.ToList()[leader].IsLeader = true;
-
         _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
     }
 
+    public void SetLeader()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        int leader = _actorNumber;
+
+        if (Round == 1)
+        {
+            leader = UnityEngine.Random.Range(0, _players.Count);
+        }
+        else
+        {
+            int maxMoney = -1;
+
+            foreach(var player in Players)
+            {
+                if (maxMoney < player.Money) {
+                    leader = player.ActorNumber;
+                    maxMoney = player.Money;
+                }
+            }
+        }
+
+        RPCPacketFactory.Create(PacketType.SetLeader, leader).Send();
+    }
     public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
@@ -68,14 +90,12 @@ public class GameManager : Singleton<GameManager>
     {
         if (isInventory)
         {
-            var itemId = Player.Inventory[index];
-            Player.Inventory[index] = -1;
-
             for (int i = 0; i < Player.Ship.Length; i++)
             {
                 if (Player.Ship[i] == -1)
                 {
-                    Player.Ship[i] = itemId;
+                    Player.Ship[i] = Player.Inventory[index];
+                    Player.Inventory[index] = -1;
                     break;
                 }
             }
@@ -96,6 +116,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         UIManager.Instance.hud.UpdateInventory();
+        UIManager.Instance.ship.UpdateInventory();
     }
 
 

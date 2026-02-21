@@ -32,6 +32,11 @@ public class HUD : UIBase
         }
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
     public void Init()
     {
         UpdateIcon();
