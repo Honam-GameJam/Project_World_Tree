@@ -5,7 +5,7 @@ using UnityEngine;
 public class VoteResultUI : PhaseUI
 {
     [SerializeField] private List<PlayerProfile> _playerInfos;
-    private WaitForSeconds delay = new WaitForSeconds(1.5f);
+    private WaitForSeconds delay = new WaitForSeconds(5f);
 
     private void OnEnable()
     {

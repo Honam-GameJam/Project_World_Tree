@@ -11,6 +11,7 @@ public class ChangeMoneyPacket : RPCPacket
     public ChangeMoneyPacket(int actorNumber, int money)
     {
         ActorNumber = actorNumber;
+        Money = money;
     }
 
     public override void Send()

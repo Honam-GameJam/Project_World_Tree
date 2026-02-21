@@ -48,6 +48,11 @@ public static class RPCPacketFactory
                 return new ChangeIconPacket(
                     (int)parameters[0],
                     (int)parameters[1]);
+
+            case PacketType.ChangeMoney:
+                return new ChangeMoneyPacket(
+                    (int)parameters[0],
+                    (int)parameters[1]);
         }
 
         return null;

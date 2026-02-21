@@ -85,6 +85,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void SetLeader(int actorNumber) => RPCPacketFactory.Create(PacketType.SetLeader, actorNumber).Send();
+    public void ChangeMoney(int money) => RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, money).Send();
     public void ChangeIcon(int sprite) => RPCPacketFactory.Create(PacketType.ChangeIcon, _actorNumber, sprite).Send();
     public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
@@ -182,7 +183,7 @@ public class GameManager : Singleton<GameManager>
         foreach (var player in Players)
         {
             if (player.HasShipTicket)
-                RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, v/Config.VotedPlayer).Send();
+                ChangeMoney(v / Config.VotedPlayer);
         }
     }
 
