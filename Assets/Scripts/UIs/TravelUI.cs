@@ -28,12 +28,9 @@ public class TravelUI : PhaseUI
 
     private void OnEnable()
     {
-        foreach (var profile in _profiles)
-        {
-            profile.gameObject.SetActive(false);
-        }
-
         _bg.sprite = _bgs[GameManager.Instance.Player.AreaIndex];
+
+        _options[1].gameObject.SetActive(GameManager.Instance.Player.AreaIndex != 4);
 
         Init(GameManager.Instance.Config.DefaultTravelTime);
     }

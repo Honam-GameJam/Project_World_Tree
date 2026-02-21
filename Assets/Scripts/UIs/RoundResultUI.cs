@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoundResultUI : PhaseUI
@@ -16,8 +15,6 @@ public class RoundResultUI : PhaseUI
 
     private void OnEnable()
     {
-        GameManager.Instance.CaculateMoney();
-
         foreach (var player in _players)
         {
             player.gameObject.SetActive(false);

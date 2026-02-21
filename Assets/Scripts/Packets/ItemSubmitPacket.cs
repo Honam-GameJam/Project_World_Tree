@@ -32,30 +32,33 @@ public class ItemSubmitPacket : RPCPacket
         if (!PhotonNetwork.IsMasterClient) return false;
         
         var player = GameManager.Instance.FindPlayer(ActorNumber);
-
-        if (!player.HasShipTicket) return false;
-
-        Dictionary<int, int> count = new Dictionary<int, int>();
-
-        // 인벤토리 개수 세기
-        foreach (int item in player.Inventory)
+        if (player.ActorNumber != GameManager.Instance.Player.ActorNumber)
         {
-            if (!count.ContainsKey(item))
-                count[item] = 0;
+            if (!player.HasShipTicket) return false;
 
-            count[item]++;
-        }
+            Dictionary<int, int> count = new Dictionary<int, int>();
 
-        // 제출 카드 검증
-        foreach (int item in Items)
-        {
-            if (!count.ContainsKey(item) || count[item] == 0)
-                return false;
+            // 인벤토리 개수 세기
+            foreach (int item in player.Inventory)
+            {
+                if (!count.ContainsKey(item))
+                    count[item] = 0;
 
-            count[item]--;
+                count[item]++;
+            }
+
+            // 제출 카드 검증
+            foreach (int item in Items)
+            {
+                if (!count.ContainsKey(item) || count[item] == 0)
+                    return false;
+
+                count[item]--;
+            }
         }
 
         GameManager.Instance.AddProducts(Items);
+        GameManager.Instance.Shippers.Add(player.ActorNumber);
 
 
         return true;
@@ -77,6 +80,10 @@ public class ItemSubmitPacket : RPCPacket
             }
         }
 
+        for(int i = 0; i < player.Ship.Length; i++)
+        {
+            player.Ship[i] = -1;
+        }
         player.HasShipTicket = false;
     }
 }

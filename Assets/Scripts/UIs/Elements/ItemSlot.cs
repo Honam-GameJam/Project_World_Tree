@@ -1,8 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
-public class ItemSlot : MonoBehaviour, IPointerClickHandler
+public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image _icon;
 
@@ -50,5 +52,17 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void SetInteractable(bool isInteractable)
     {
         _isClickable = isInteractable;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_isEmpty || _itemId == -1) return;
+
+        var item = GameManager.Instance.Items.GetItem(_itemId);
+        TooltipSystem.Instance.Show(item.Name, item.Description, item.Value);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipSystem.Instance.Hide();
     }
 }

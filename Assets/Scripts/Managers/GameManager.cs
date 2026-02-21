@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     private Dictionary<int, Player> _players = new();
     private Dictionary<int, int> _products = new();
     public Dictionary<int, int> Benefits = new();
+    public List<int> Shippers = new();
 
     public IReadOnlyCollection<Player> Players => _players.Values;
     public Player Player => _players[_actorNumber];
@@ -39,6 +40,8 @@ public class GameManager : Singleton<GameManager>
     {
         AddListener(Phase.GoHome, true, () => _travelCount++);
         AddListener(Phase.Vote, true, () => _travelCount = 0);
+        AddListener(Phase.Calculate, true, CaculateMoney);
+        AddListener(Phase.RoundResult, false, () => { Benefits.Clear(); Shippers.Clear(); Round++; SetLeader(); });
     }
 
     public void InitPlayers()
@@ -177,13 +180,15 @@ public class GameManager : Singleton<GameManager>
         int v = 0;
         foreach ((int id, int count) in _products)
         {
-            v += Items.GetItem(id).Value * count;
+            if (id == -1) continue;
+            var item = Items.GetItem(id);
+            v += item.Value * count;
         }
 
         foreach (var player in Players)
         {
-            if (player.HasShipTicket)
-                ChangeMoney(v / Config.VotedPlayer);
+            if (Shippers.Contains(player.ActorNumber))
+                ChangeMoney(v / Shippers.Count);
         }
     }
 
