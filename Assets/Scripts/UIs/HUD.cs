@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HUD : UIBase
 {
     [Header("Chat")]
+    [SerializeField] private TextMeshProUGUI _area;
     [SerializeField] private TMP_InputField _inputField;
     [SerializeField] private Button _send;
     [SerializeField] private Transform _chatParent;
@@ -62,9 +63,27 @@ public class HUD : UIBase
     public void UpdateIcon() => _icon.sprite = GameManager.Instance.Player.Icon;
     public void UpdateName() => _name.text = GameManager.Instance.Player.Name;
     public void UpdateMoney() => _money.text = GameManager.Instance.Player.Money.ToString();
-    public void UpdateRound() => _round.text = $"게임 라운드 [{GameManager.Instance.Round}/{GameManager.Instance.Config.Round}]";
+    public void UpdateRound() => _round.text = $"게임 라운드\n[{GameManager.Instance.Round}/{GameManager.Instance.Config.Round}]";
     public void HideRound() => _round.gameObject.SetActive(false);
     public void ShowRound() => _round.gameObject.SetActive(true);
+    public void UpdateArea()
+    {
+        if (GameManager.Instance.Phase == Game.Enum.Phase.Travel)
+        {
+            _area.text = GameManager.Instance.Player.AreaIndex switch
+            {
+                0 => "광산",
+                1 => "제련소",
+                2 => "가공소",
+                3 => "공장",
+                4 => "휴식",
+            };
+        }
+        else
+        {
+            _area.text = "로비";
+        }
+    }
     public void UpdateInventory()
     {
         for (int i = 0; i < _inventory.Count; i++)

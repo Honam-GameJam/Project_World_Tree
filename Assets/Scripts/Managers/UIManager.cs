@@ -7,6 +7,7 @@ public class UIManager : Singleton<UIManager>
     private Dictionary<Phase, PhaseUI> _phaseUI = new();
     public HUD hud { get; private set; }
     public ShipUI ship => _phaseUI[Phase.Feed] as ShipUI;
+    public CoverUI cover { get; private set; }
 
     private void Awake()
     {
@@ -28,10 +29,18 @@ public class UIManager : Singleton<UIManager>
                 hud = Instantiate(ui as HUD);
                 GameManager.Instance.AddListener(Phase.Travel, true, () =>  hud.gameObject.SetActive(true));
                 GameManager.Instance.AddListener(Phase.Travel, true, hud.ShowRound);
+                GameManager.Instance.AddListener(Phase.GoHome, true, hud.UpdateArea);
+                GameManager.Instance.AddListener(Phase.Travel, true, hud.UpdateArea);
                 GameManager.Instance.AddListener(Phase.Vote, true, () => { if (true) hud.HideRound(); }); // 리더가 아니 때만 끔
                 GameManager.Instance.AddListener(Phase.VoteResult, false, hud.ShowRound);
                 GameManager.Instance.AddListener(Phase.Feed, true, () => hud.SetInventoryInteractable(true));
                 GameManager.Instance.AddListener(Phase.Feed, false, () => hud.SetInventoryInteractable(false));
+            }
+
+            if (ui is CoverUI)
+            {
+                cover = Instantiate(ui as CoverUI);
+                cover.gameObject.SetActive(false);
             }
         }
     }

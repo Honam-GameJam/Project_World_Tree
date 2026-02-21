@@ -21,13 +21,21 @@ public class TravelUI : PhaseUI
             int index = i;
             _options[index].onClick.AddListener(() => SelectOption(index));
         }
+    }
+
+    private void OnEnable()
+    {
+        foreach (var profile in _profiles)
+        {
+            profile.gameObject.SetActive(false);
+        }
 
         Init(GameManager.Instance.Config.DefaultTravelTime);
     }
 
     public void Init(float time)
     {
-        _curMember = 1;
+        _curMember = 0;
         foreach (var profile in _profiles)
         {
             profile.gameObject.SetActive(false);
@@ -41,8 +49,9 @@ public class TravelUI : PhaseUI
 
             if (p.AreaIndex == player.AreaIndex)
             {
-                _profiles[_curMember - 1].UpdateIcon(p.Icon);
-                _profiles[_curMember - 1].UpdateName(p.Name);
+                _profiles[_curMember].UpdateIcon(p.Icon);
+                _profiles[_curMember].UpdateName(p.Name);
+                _profiles[_curMember].gameObject.SetActive(true);
                 _curMember++;
             }
         }
@@ -69,6 +78,7 @@ public class TravelUI : PhaseUI
     {
         if (GameManager.Instance.Player.AreaIndex != 4
             && index == 1 && GameManager.Instance.Player.Money < 2) return;
+
         GameManager.Instance.SelectOption(index);
 
         GameManager.Instance.AsyncPhase();

@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProfile
   _icon: {fileID: 6978762515882926800}
-  _name: {fileID: 0}
+  _name: {fileID: 3945463402329306714}
   _money: {fileID: 0}
 --- !u!1 &479470555053808851
 GameObject:
@@ -2448,7 +2448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProfile
   _icon: {fileID: 4806113994194665807}
-  _name: {fileID: 0}
+  _name: {fileID: 4138661707448673070}
   _money: {fileID: 0}
 --- !u!1 &5411943541808577478
 GameObject:
@@ -2541,7 +2541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProfile
   _icon: {fileID: 593561023392077994}
-  _name: {fileID: 0}
+  _name: {fileID: 4571305513738824654}
   _money: {fileID: 0}
 --- !u!1 &5446033901096697905
 GameObject:
@@ -2643,7 +2643,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.38364768, g: 0.38364768, b: 0.38364768, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -3241,7 +3241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProfile
   _icon: {fileID: 630543101257566017}
-  _name: {fileID: 0}
+  _name: {fileID: 8059579732245351408}
   _money: {fileID: 0}
 --- !u!1 &8601539710434107977
 GameObject:
@@ -3471,7 +3471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProfile
   _icon: {fileID: 88496254463103485}
-  _name: {fileID: 0}
+  _name: {fileID: 3665909580682392812}
   _money: {fileID: 0}
 --- !u!1 &9167011049449325958
 GameObject:
@@ -3572,7 +3572,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.38431373, g: 0.38431373, b: 0.38431373, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

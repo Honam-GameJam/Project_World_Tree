@@ -1,4 +1,3 @@
-using Game.Enum;
 using UnityEngine;
 
 public class GameTrigger : MonoBehaviour
@@ -8,6 +7,5 @@ public class GameTrigger : MonoBehaviour
         var ui = UIManager.Instance;
 
         GameManager.Instance.InitPlayers();
-        GameManager.Instance.SetPhase(Phase.TravelSelection);
     }
 }

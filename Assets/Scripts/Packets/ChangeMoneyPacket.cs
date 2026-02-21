@@ -35,6 +35,7 @@ public class ChangeMoneyPacket : RPCPacket
     public override void Response()
     {
         GameManager.Instance.FindPlayer(ActorNumber).Money += Money;
-        if (ActorNumber == GameManager.Instance.Player.ActorNumber) UIManager.Instance.hud.UpdateMoney();
+        if (ActorNumber == GameManager.Instance.Player.ActorNumber)
+            UIManager.Instance.hud.UpdateMoney();
     }
 }
