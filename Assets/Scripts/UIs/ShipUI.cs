@@ -19,6 +19,11 @@ public class ShipUI : PhaseUI
         _submit.onClick.AddListener(Submit);
     }
 
+    private void Start()
+    {
+        if (!GameManager.Instance.Player.HasShipTicket) GameManager.Instance.AsyncPhase();
+    }
+
     public void Submit()
     {
         GameManager.Instance.SubmitItem();

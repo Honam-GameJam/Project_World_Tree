@@ -43,7 +43,7 @@ public class MemberSelectionUI : PhaseUI
         selectionArr = new int[GameManager.Instance.Config.VotedPlayer];
         UpdateCount();
 
-        //if (!GameManager.Instance.Player.IsLeader) GameManager.Instance.AsyncPhase();
+        if (!GameManager.Instance.Player.IsLeader) GameManager.Instance.AsyncPhase();
     }
 
     public void SelectionArray(int index)

@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
     //Master Client
     private Dictionary<int, Player> _players = new();
     private Dictionary<int, int> _products = new();
-    private Dictionary<int, int> _benefits = new();
+    public Dictionary<int, int> Benefits = new();
 
     public IReadOnlyCollection<Player> Players => _players.Values;
     public Player Player => _players[_actorNumber];
@@ -81,9 +81,10 @@ public class GameManager : Singleton<GameManager>
             }
         }
 
-        RPCPacketFactory.Create(PacketType.SetLeader, leader).Send();
+        SetLeader(leader);
     }
 
+    public void SetLeader(int actorNumber) => RPCPacketFactory.Create(PacketType.SetLeader, actorNumber).Send();
     public void ChangeIcon(int sprite) => RPCPacketFactory.Create(PacketType.ChangeIcon, _actorNumber, sprite).Send();
     public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
@@ -169,6 +170,8 @@ public class GameManager : Singleton<GameManager>
     public void CaculateMoney()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_products == null || _products.Count == 0) return;
 
         int v = 0;
         foreach ((int id, int count) in _products)
