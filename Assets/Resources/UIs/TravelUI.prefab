@@ -2202,6 +2202,8 @@ GameObject:
   - component: {fileID: 2490220666274260687}
   - component: {fileID: 791767943801138168}
   - component: {fileID: 2364149197484905635}
+  - component: {fileID: 7171922004257916068}
+  - component: {fileID: 4352601616261968990}
   m_Layer: 5
   m_Name: TravelUI
   m_TagString: Untagged
@@ -2317,6 +2319,44 @@ MonoBehaviour:
   - {fileID: 2734196493682552560}
   - {fileID: 5569070411721473123}
   _timer: {fileID: 2166114799742598229}
+--- !u!222 &7171922004257916068
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4875696557956778546}
+  m_CullTransparentMesh: 1
+--- !u!114 &4352601616261968990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4875696557956778546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.7610062, g: 0.7610062, b: 0.7610062, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -8112383406132297116, guid: a74240e22c5f3604ca8ee0747a8eac6d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5318115060071359351
 GameObject:
   m_ObjectHideFlags: 0
