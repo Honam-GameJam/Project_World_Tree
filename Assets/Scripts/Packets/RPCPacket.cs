@@ -21,10 +21,15 @@ public static class RPCPacketFactory
                 return new ItemSubmitPacket(
                     (int)parameters[0],
                     (int[])parameters[1]);
+
             case PacketType.VoteConfirm:
                 return new VoteConfirmPacket(
                     (int)parameters[0],
                     (int[])parameters[1]);
+
+            case PacketType.AsyncPhase:
+                return new AsyncPhasePacket(
+                    (int)parameters[0]);
         }
 
         return null;
