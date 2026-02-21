@@ -22,6 +22,7 @@ public class ShipUI : PhaseUI
     public void Submit()
     {
         GameManager.Instance.SubmitItem();
+        GameManager.Instance.AsyncPhase();
     }
 
     public void UpdateInventory()

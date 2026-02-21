@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static Photon.Pun.Demo.Shared.DocLinks;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -16,6 +15,7 @@ public class GameManager : Singleton<GameManager>
     //Master Client
     private Dictionary<int, Player> _players = new();
     private Dictionary<int, int> _products = new();
+    private Dictionary<int, int> _benefits = new();
 
     public IReadOnlyCollection<Player> Players => _players.Values;
     public Player Player => _players[_actorNumber];
@@ -24,7 +24,7 @@ public class GameManager : Singleton<GameManager>
     private int _actorNumber;
 
     private int _travelCount;
-    public bool _mustTravel => _travelCount < Config.TravelCycle - 1;
+    public bool MustTravel => _travelCount < Config.TravelCycle;
     public int Round { get; private set; } = 1;
     public ItemSO Items;
     public ConfigSO Config;
@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        AddListener(Phase.TravelSelection, true, () => _travelCount++);
+        AddListener(Phase.GoHome, true, () => _travelCount++);
         AddListener(Phase.Vote, true, () => _travelCount = 0);
     }
 
@@ -52,6 +52,9 @@ public class GameManager : Singleton<GameManager>
         }
 
         _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+
+        ChangeIcon(UnityEngine.Random.Range(0, Config.Icons.Count));
+        SetLeader();
     }
 
     public void SetLeader()
@@ -62,7 +65,8 @@ public class GameManager : Singleton<GameManager>
 
         if (Round == 1)
         {
-            leader = UnityEngine.Random.Range(0, _players.Count);
+            var random = UnityEngine.Random.Range(0, Players.Count);
+            leader = Players.ToList()[random].ActorNumber;
         }
         else
         {
@@ -79,6 +83,8 @@ public class GameManager : Singleton<GameManager>
 
         RPCPacketFactory.Create(PacketType.SetLeader, leader).Send();
     }
+
+    public void ChangeIcon(int sprite) => RPCPacketFactory.Create(PacketType.ChangeIcon, _actorNumber, sprite).Send();
     public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
@@ -173,7 +179,7 @@ public class GameManager : Singleton<GameManager>
         foreach (var player in Players)
         {
             if (player.HasShipTicket)
-                RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, v/4).Send();
+                RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, v/Config.VotedPlayer).Send();
         }
     }
 

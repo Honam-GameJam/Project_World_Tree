@@ -43,6 +43,11 @@ public static class RPCPacketFactory
             case PacketType.SetLeader:
                 return new SetLeaderPacket(
                     (int)parameters[0]);
+
+            case PacketType.ChangeIcon:
+                return new ChangeIconPacket(
+                    (int)parameters[0],
+                    (int)parameters[1]);
         }
 
         return null;

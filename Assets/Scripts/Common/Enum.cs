@@ -9,7 +9,7 @@ namespace Game.Enum
         Vote,
         VoteResult,
         Feed,    
-        CheckWorldTree,
+        RoundResult,
         GameResult,
     }
 
@@ -24,5 +24,6 @@ namespace Game.Enum
         AsyncPhase,
         GiveItem,
         SetLeader,
+        ChangeIcon,
     }
 }

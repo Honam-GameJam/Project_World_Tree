@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MemberSelectionUI : PhaseUI
 {
-    [SerializeField] private List<Button> _playerInfos;
+    [SerializeField] private List<PlayerInfo> _playerInfos;
     [SerializeField] private Button _confirmBtn;
     [SerializeField] private TextMeshProUGUI _count;
 
@@ -15,17 +15,36 @@ public class MemberSelectionUI : PhaseUI
 
     private void Awake()
     {
-        for (int i = 0; i < _playerInfos.Count; i++)
+        var playerSize = GameManager.Instance.Config.MaxPlayer;
+
+        int i = 0;
+        foreach (var player in GameManager.Instance.Players)
+        {
+            _playerInfos[i].gameObject.SetActive(true);
+            _playerInfos[i].UpdateIcon(player.Icon);
+            _playerInfos[i].UpdateName(player.Name);
+            _playerInfos[i].UpdateMoney(player.Money);
+
+            i++;
+        }
+
+        for (i = 0; i < playerSize; i++)
         {
             int index = i;
-            _playerInfos[i].onClick.AddListener(() => SelectionArray(index));
+            _playerInfos[i].Button.onClick.AddListener(() => SelectionArray(index));
         }
 
         _confirmBtn.onClick.AddListener(Confirm);
-        selectionArr = new int[GameManager.Instance.Config.VotedPlayer];
-        UpdateCount();
     }
 
+    private void OnEnable()
+    {
+        selectionCnt = 0;
+        selectionArr = new int[GameManager.Instance.Config.VotedPlayer];
+        UpdateCount();
+
+        if (!GameManager.Instance.Player.IsLeader) GameManager.Instance.AsyncPhase();
+    }
 
     public void SelectionArray(int index)
     {
@@ -50,6 +69,7 @@ public class MemberSelectionUI : PhaseUI
     private void Confirm()
     {
         GameManager.Instance.DeliverSelectionArray(selectionArr);
+        GameManager.Instance.AsyncPhase();
     }
 
     private void UpdateCount() => _count.text = $"È®Á¤ ({selectionCnt}/{selectionArr.Length})";
