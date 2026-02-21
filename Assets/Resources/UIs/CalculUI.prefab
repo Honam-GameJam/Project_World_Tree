@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3805954984705005111}
   - component: {fileID: 6500364698400801198}
   m_Layer: 5
-  m_Name: GoHomeUI
+  m_Name: CalculUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8831afca7f2ddee4ca80125bea800347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoHomeUI
-  <Phase>k__BackingField: 3
+  <Phase>k__BackingField: 9
 --- !u!1 &6595392754390028337
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC9D1\uC73C\uB85C \uB3CC\uC544\uAC11\uB2C8\uB2E4.."
+  m_text: "\uC790\uC0B0\uC744 \uACC4\uC0B0\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4.."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e1533215b0e579419ff0c46bf005b65, type: 2}
   m_sharedMaterial: {fileID: -8370313654745476058, guid: 6e1533215b0e579419ff0c46bf005b65, type: 2}

@@ -15,7 +15,8 @@ public class GameManager : Singleton<GameManager>
     //Master Client
     private Dictionary<int, Player> _players = new();
     private Dictionary<int, int> _products = new();
-    private Dictionary<int, int> _benefits = new();
+    public Dictionary<int, int> Benefits = new();
+    public List<int> Shippers = new();
 
     public IReadOnlyCollection<Player> Players => _players.Values;
     public Player Player => _players[_actorNumber];
@@ -39,6 +40,8 @@ public class GameManager : Singleton<GameManager>
     {
         AddListener(Phase.GoHome, true, () => _travelCount++);
         AddListener(Phase.Vote, true, () => _travelCount = 0);
+        AddListener(Phase.Calculate, true, CaculateMoney);
+        AddListener(Phase.RoundResult, false, () => { Benefits.Clear(); Shippers.Clear(); Round++; SetLeader(); });
     }
 
     public void InitPlayers()
@@ -81,9 +84,11 @@ public class GameManager : Singleton<GameManager>
             }
         }
 
-        RPCPacketFactory.Create(PacketType.SetLeader, leader).Send();
+        SetLeader(leader);
     }
 
+    public void SetLeader(int actorNumber) => RPCPacketFactory.Create(PacketType.SetLeader, actorNumber).Send();
+    public void ChangeMoney(int money) => RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, money).Send();
     public void ChangeIcon(int sprite) => RPCPacketFactory.Create(PacketType.ChangeIcon, _actorNumber, sprite).Send();
     public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
@@ -170,16 +175,20 @@ public class GameManager : Singleton<GameManager>
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
+        if (_products == null || _products.Count == 0) return;
+
         int v = 0;
         foreach ((int id, int count) in _products)
         {
-            v += Items.GetItem(id).Value * count;
+            if (id == -1) continue;
+            var item = Items.GetItem(id);
+            v += item.Value * count;
         }
 
         foreach (var player in Players)
         {
-            if (player.HasShipTicket)
-                RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, v/Config.VotedPlayer).Send();
+            if (Shippers.Contains(player.ActorNumber))
+                ChangeMoney(v / Shippers.Count);
         }
     }
 

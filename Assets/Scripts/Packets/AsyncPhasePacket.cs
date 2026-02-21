@@ -57,7 +57,9 @@ public class AsyncPhasePacket : RPCPacket
             Phase.GoHome => GameManager.Instance.MustTravel ? Phase.TravelSelection : Phase.Vote,
             Phase.Vote => Phase.VoteResult,
             Phase.VoteResult => Phase.Feed,
-            Phase.Feed => Phase.GameResult,
+            Phase.Feed => Phase.Calculate,
+            Phase.Calculate => Phase.RoundResult,
+            Phase.RoundResult => GameManager.Instance.Round < GameManager.Instance.Config.Round ? Phase.TravelSelection : Phase.GameResult,
             _ => Phase.InLobby,
         };
 

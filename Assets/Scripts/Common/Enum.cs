@@ -11,6 +11,7 @@ namespace Game.Enum
         Feed,    
         RoundResult,
         GameResult,
+        Calculate,
     }
 
     public enum PacketType

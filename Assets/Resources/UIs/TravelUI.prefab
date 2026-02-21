@@ -278,7 +278,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC790\uC0B0 -3"
+  m_text: "\uC790\uC0B0 -2 / 2\uBC30\uC758 \uBCF4\uC0C1"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e1533215b0e579419ff0c46bf005b65, type: 2}
   m_sharedMaterial: {fileID: -8370313654745476058, guid: 6e1533215b0e579419ff0c46bf005b65, type: 2}
@@ -287,8 +287,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4281030322
+  m_fontColor: {r: 0.6981132, g: 0.33803472, b: 0.16794232, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2319,6 +2319,13 @@ MonoBehaviour:
   - {fileID: 2734196493682552560}
   - {fileID: 5569070411721473123}
   _timer: {fileID: 2166114799742598229}
+  _bgs:
+  - {fileID: -8112383406132297116, guid: a74240e22c5f3604ca8ee0747a8eac6d, type: 3}
+  - {fileID: -5515462971403414681, guid: 4b343309a75288646b350477b2f2fee4, type: 3}
+  - {fileID: 5248037142941400638, guid: 9d7f820d9627fd44ba1c5ebb755fe555, type: 3}
+  - {fileID: -7783430325343852132, guid: 384fe581428520e47b27423ae58ab8a2, type: 3}
+  - {fileID: 8993749310216187204, guid: 765f917661d9e8d41a4326b659ab18a7, type: 3}
+  _bg: {fileID: 4352601616261968990}
 --- !u!222 &7171922004257916068
 CanvasRenderer:
   m_ObjectHideFlags: 0

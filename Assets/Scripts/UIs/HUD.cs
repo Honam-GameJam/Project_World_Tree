@@ -33,7 +33,7 @@ public class HUD : UIBase
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         Init();
     }

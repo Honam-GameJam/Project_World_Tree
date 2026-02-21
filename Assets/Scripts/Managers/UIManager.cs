@@ -35,6 +35,7 @@ public class UIManager : Singleton<UIManager>
                 GameManager.Instance.AddListener(Phase.VoteResult, false, hud.ShowRound);
                 GameManager.Instance.AddListener(Phase.Feed, true, () => hud.SetInventoryInteractable(true));
                 GameManager.Instance.AddListener(Phase.Feed, false, () => hud.SetInventoryInteractable(false));
+                GameManager.Instance.AddListener(Phase.RoundResult, true, () => hud.gameObject.SetActive(false));
             }
 
             if (ui is CoverUI)

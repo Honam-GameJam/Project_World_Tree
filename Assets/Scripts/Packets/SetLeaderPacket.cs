@@ -3,7 +3,7 @@ using Photon.Pun;
 
 public class SetLeaderPacket : RPCPacket
 {
-    public override PacketType type => PacketType.AsyncPhase;
+    public override PacketType type => PacketType.SetLeader;
 
     public int ActorNumber;
 

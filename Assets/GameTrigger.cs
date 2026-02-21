@@ -7,5 +7,6 @@ public class GameTrigger : MonoBehaviour
         var ui = UIManager.Instance;
 
         GameManager.Instance.InitPlayers();
+        GameManager.Instance.SetPhase(Game.Enum.Phase.TravelSelection);
     }
 }

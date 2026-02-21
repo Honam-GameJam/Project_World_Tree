@@ -11,13 +11,14 @@ public class ChangeMoneyPacket : RPCPacket
     public ChangeMoneyPacket(int actorNumber, int money)
     {
         ActorNumber = actorNumber;
+        Money = money;
     }
 
     public override void Send()
     {
         if (!PhotonNetwork.IsMasterClient)
         {
-            //RPCManager.Instance.photonView.RPC(nameof(RPCManager.RPC_Request), RpcTarget.MasterClient, type, new object[] { ActorNumber, Money });
+            RPCManager.Instance.photonView.RPC(nameof(RPCManager.RPC_Request), RpcTarget.MasterClient, type, new object[] { ActorNumber, Money });
         }
         else if (Check())
         {
@@ -28,6 +29,15 @@ public class ChangeMoneyPacket : RPCPacket
     public override bool Check()
     {
         if (!PhotonNetwork.IsMasterClient) return false;
+
+        if (!GameManager.Instance.Benefits.ContainsKey(ActorNumber))
+        {
+            GameManager.Instance.Benefits[ActorNumber] = Money;
+        }
+        else
+        {
+            GameManager.Instance.Benefits[ActorNumber] += Money;
+        }
 
         return true;
     }

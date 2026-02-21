@@ -11,6 +11,9 @@ public class TravelUI : PhaseUI
 
     [SerializeField] private TextMeshProUGUI _timer;
 
+    [SerializeField] private List<Sprite> _bgs;
+    [SerializeField] private Image _bg;
+
     private int _curMember;
     private float _time;
     private bool _isTimeOver;
@@ -25,10 +28,9 @@ public class TravelUI : PhaseUI
 
     private void OnEnable()
     {
-        foreach (var profile in _profiles)
-        {
-            profile.gameObject.SetActive(false);
-        }
+        _bg.sprite = _bgs[GameManager.Instance.Player.AreaIndex];
+
+        _options[1].gameObject.SetActive(GameManager.Instance.Player.AreaIndex != 4);
 
         Init(GameManager.Instance.Config.DefaultTravelTime);
     }
