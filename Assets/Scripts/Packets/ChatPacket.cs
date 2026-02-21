@@ -1,5 +1,6 @@
 using Game.Enum;
 using Photon.Pun;
+using System;
 
 public class ChatPacket : RPCPacket
 {
@@ -35,6 +36,11 @@ public class ChatPacket : RPCPacket
 
     public override void Response()
     {
-        GameManager.Instance.SendChat(ActorNumber, Text);
+        var player = GameManager.Instance.FindPlayer(ActorNumber);
+
+        if (player == null) return;
+        if (player.AreaIndex != GameManager.Instance.Player.AreaIndex) return;
+
+        UIManager.Instance.hud.ReceiveChat(player.Icon, ActorNumber == GameManager.Instance.Player.ActorNumber, Text);
     }
 }

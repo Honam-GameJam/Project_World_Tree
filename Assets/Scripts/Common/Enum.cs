@@ -5,7 +5,9 @@ namespace Game.Enum
         InLobby,
         TravelSelection,
         Travel,
+        GoHome,
         Vote,
+        VoteResult,
         Feed,    
         CheckWorldTree,
         GameResult,
@@ -16,6 +18,7 @@ namespace Game.Enum
         TravelSelection,
         ChangeMoney,
         GetItem,
+        ItemSubmit,
         Chat,
         VoteConfirm,
     }

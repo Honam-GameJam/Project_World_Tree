@@ -6,7 +6,7 @@ using UnityEngine;
 public class UIManager : Singleton<UIManager>
 {
     private Dictionary<Phase, PhaseUI> _phaseUI = new();
-    public HUD HUD { get; private set; }
+    public HUD hud { get; private set; }
 
     private void Awake()
     {
@@ -25,8 +25,13 @@ public class UIManager : Singleton<UIManager>
 
             if (ui is HUD)
             {
-                HUD = Instantiate(ui as HUD);
+                hud = Instantiate(ui as HUD);
                 GameManager.Instance.AddListener(Phase.Travel, true, () => gameObject.SetActive(true));
+                GameManager.Instance.AddListener(Phase.Travel, true, hud.ShowRound);
+                GameManager.Instance.AddListener(Phase.Vote, true, () => { if (true) hud.HideRound(); }); // 리더가 아니 때만 끔
+                GameManager.Instance.AddListener(Phase.VoteResult, false, hud.ShowRound);
+                GameManager.Instance.AddListener(Phase.Feed, true, () => hud.SetInventoryInteractable(true));
+                GameManager.Instance.AddListener(Phase.Feed, false, () => hud.SetInventoryInteractable(false));
             }
         }
     }

@@ -8,7 +8,6 @@ public class TravelSelectionUI : PhaseUI
     [SerializeField] private List<Button> _areas;
     [SerializeField] private TextMeshProUGUI _timer;
 
-    [SerializeField] private ConfigSO _config;
     private float _time;
     private bool _isTimeOver;
 
@@ -20,7 +19,7 @@ public class TravelSelectionUI : PhaseUI
             _areas[i].onClick.AddListener(() => GameManager.Instance.ClickArea(index));
         }
 
-        Init(_config.DefaultTravelSelectionTime);
+        Init(GameManager.Instance.config.DefaultTravelSelectionTime);
     }
 
     public void Init(float time)

@@ -1,9 +1,5 @@
 using Game.Enum;
-using NUnit.Framework;
 using Photon.Pun;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 public class VoteConfirmPacket : RPCPacket
 {
@@ -34,13 +30,14 @@ public class VoteConfirmPacket : RPCPacket
     {
         if (!PhotonNetwork.IsMasterClient)
             return false;
-        
-        //isLeader check
+
+        if (!GameManager.Instance.FindPlayer(ActorNumber).isLeader) return false;
+
         return true;
     }
 
     public override void Response()
     {
-        GameManager.Instance.DeliverSelectionArray(ActorNumber, SelectionArr);
+        GameManager.Instance.FindPlayer(ActorNumber).hasShipTicket = true;
     }
 }

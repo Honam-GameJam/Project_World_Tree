@@ -17,6 +17,10 @@ public static class RPCPacketFactory
                     (int)parameters[0],
                     (string)parameters[1]);
 
+            case PacketType.ItemSubmit:
+                return new ItemSubmitPacket(
+                    (int)parameters[0],
+                    (int[])parameters[1]);
             case PacketType.VoteConfirm:
                 return new VoteConfirmPacket(
                     (int)parameters[0],
