@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MemberSelectionUI : MonoBehaviour
+public class MemberSelectionUI : PhaseUI
 {
     [SerializeField] private List<Button> _playerInfos;
     [SerializeField] private Button _confirmBtn;
+    [SerializeField] private TextMeshProUGUI _count;
 
     //선택된 인원 리스트로 저장
-    private int[] selectionArr = new int[4]; //length 6
+    private int[] selectionArr = new int[GameManager.Instance.Config.MaxPlayer];
     private int selectionCnt = 0;
 
     private void Awake()
@@ -19,7 +21,8 @@ public class MemberSelectionUI : MonoBehaviour
             _playerInfos[i].onClick.AddListener(() => SelectionArray(index));
         }
 
-        _confirmBtn.onClick.AddListener(() => GameManager.Instance.DeliverSelectionArray(selectionArr));
+        _confirmBtn.onClick.AddListener(Confirm);
+        UpdateCount();
     }
 
 
@@ -39,5 +42,14 @@ public class MemberSelectionUI : MonoBehaviour
             selectionArr[selectionCnt++] = index;
         else
             Debug.Log("selection array full");
+
+        UpdateCount();
     }
+
+    private void Confirm()
+    {
+        GameManager.Instance.DeliverSelectionArray(selectionArr);
+    }
+
+    private void UpdateCount() => _count.text = $"확정 ({selectionCnt}/{selectionArr.Length})";
 }

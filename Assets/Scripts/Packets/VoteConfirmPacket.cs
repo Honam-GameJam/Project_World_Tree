@@ -41,5 +41,7 @@ public class VoteConfirmPacket : RPCPacket
         var player = GameManager.Instance.FindPlayer(ActorNumber);
         player.HasShipTicket = true;
         player.IsLeader = false;
+
+        GameManager.Instance.AsyncPhase();
     }
 }

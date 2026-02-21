@@ -3,6 +3,7 @@ using Game.Enum;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Photon.Pun.Demo.Shared.DocLinks;
 
@@ -23,7 +24,7 @@ public class GameManager : Singleton<GameManager>
     private int _actorNumber;
 
     private int _travelCount;
-    public bool _mustTravel => _travelCount < Config.TravelCycle;
+    public bool _mustTravel => _travelCount < Config.TravelCycle - 1;
     public int Round { get; private set; }
     public ItemSO Items;
     public ConfigSO Config;
@@ -44,11 +45,14 @@ public class GameManager : Singleton<GameManager>
     {
         foreach(var p in PhotonNetwork.CurrentRoom.Players.Values)
         {
-            var player = new Player(p.ActorNumber, p.NickName);
+            var player = new Player(p.ActorNumber, p.NickName, Config.DefaultMoney);
             _players[p.ActorNumber] = player;
 
             AddListener(Phase.TravelSelection, true, () => player.hasSelected = false);
         }
+
+        var leader = UnityEngine.Random.Range(0, _players.Count);
+        _players.Values.ToList()[leader].IsLeader = true;
 
         _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
     }
@@ -143,6 +147,12 @@ public class GameManager : Singleton<GameManager>
         foreach ((int id, int count) in _products)
         {
             v += Items.GetItem(id).Value * count;
+        }
+
+        foreach (var player in Players)
+        {
+            if (player.HasShipTicket)
+                RPCPacketFactory.Create(PacketType.ChangeMoney, _actorNumber, v/4).Send();
         }
     }
 

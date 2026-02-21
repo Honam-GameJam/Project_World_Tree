@@ -32,6 +32,14 @@ public class HUD : UIBase
         }
     }
 
+    public void Init()
+    {
+        UpdateIcon();
+        UpdateName();
+        UpdateMoney();
+        UpdateRound();
+    }
+
     private void SendChat()
     {
         if (string.IsNullOrWhiteSpace(_inputField.text)) return;

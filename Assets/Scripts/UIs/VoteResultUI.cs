@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class GoHomeUI : PhaseUI
+public class VoteResultUI : PhaseUI
 {
+
+    [SerializeField] private List<PlayerProfile> _playerInfos;
     private WaitForSeconds delay = new WaitForSeconds(1.5f);
 
     private void OnEnable()

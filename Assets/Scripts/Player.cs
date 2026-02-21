@@ -16,10 +16,11 @@ namespace Game.Data
         public bool HasShipTicket;
         public bool IsActionFinished;
 
-        public Player(int actorNumber, string name)
+        public Player(int actorNumber, string name, int money)
         {
             ActorNumber = actorNumber;
             Name = name;
+            Money = money;
             Inventory = new int[6] { -1, -1, -1, -1, -1, -1 };
             Ship = new int[3] { -1, -1, -1 };
         }

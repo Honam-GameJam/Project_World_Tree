@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e99f1a8359241647885b1be9b743e02, type: 3}
   m_Name: ConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::ConfigSO
-  <DefaultTravelSelectionTime>k__BackingField: 1
+  <DefaultMoney>k__BackingField: 10
+  <DefaultTravelSelectionTime>k__BackingField: 5
   <DefaultTravelTime>k__BackingField: 30
   <Round>k__BackingField: 5
   <TravelCycle>k__BackingField: 2
