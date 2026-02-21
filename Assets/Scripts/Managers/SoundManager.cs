@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoSingleton<SoundManager>
+public class SoundManager : Singleton<SoundManager>
 {
     private AudioSource _bgmSource;
     private List<AudioSource> _sfxAudio;
@@ -44,7 +44,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void PlayBGM()
     {
         _bgmSource.Stop();
-        _bgmSource.volume = GameManager.Instance.Option.BgmVolume;
+        _bgmSource.volume = 15;
         _bgmSource.clip = _bgm;
         _bgmSource.Play();
     }
@@ -81,7 +81,7 @@ public class SoundManager : MonoSingleton<SoundManager>
             }
             else
             {
-                audio.volume = GameManager.Instance.Option.SfxVolume;
+                audio.volume = 15;
                 audio.clip = clip;
                 audio.Play();
 
@@ -96,7 +96,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         {
             if (!audio.isPlaying)
             {
-                audio.volume = GameManager.Instance.Option.SfxVolume;
+                audio.volume = 15f;
 
                 audio.PlayOneShot(clip);
 

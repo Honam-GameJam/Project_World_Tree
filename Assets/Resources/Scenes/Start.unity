@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f35bee5c767d54d9af2779aad2601d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Launcher
-  maxPlayersPerRoom: 6
+  maxPlayersPerRoom: 1
   gameSceneName: Main
   controlPanel: {fileID: 1996563719}
   progressLabel: {fileID: 532103298}
