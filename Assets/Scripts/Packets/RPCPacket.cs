@@ -11,7 +11,11 @@ public static class RPCPacketFactory
                     (int)parameters[0],
                     (int)parameters[1]);
 
-            
+            case PacketType.Chat:
+                return new ChatPacket(
+                    (int)parameters[0],
+                    (string)parameters[1]);
+
         }
 
         return null;

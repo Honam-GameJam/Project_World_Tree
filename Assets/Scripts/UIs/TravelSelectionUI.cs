@@ -29,11 +29,6 @@ public class TravelSelectionUI : PhaseUI
         _isTimeOver = false;
     }
 
-    private Game.Enum.Phase GetPhase()
-    {
-        return Phase;
-    }
-
     private void Update()
     {
         if (_isTimeOver) return;
