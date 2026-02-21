@@ -16,7 +16,7 @@ MonoBehaviour:
   <DefaultTravelSelectionTime>k__BackingField: 5
   <DefaultTravelTime>k__BackingField: 30
   <Round>k__BackingField: 5
-  <TravelCycle>k__BackingField: 2
+  <TravelCycle>k__BackingField: 0
   <MaxPlayer>k__BackingField: 6
   <VotedPlayer>k__BackingField: 4
   <Icons>k__BackingField:
