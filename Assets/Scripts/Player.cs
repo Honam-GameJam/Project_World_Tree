@@ -10,6 +10,7 @@ namespace Game.Data
         public bool hasSelected;
         public int AreaIndex;
         public int Money;
+        public int isLeader;
         public int[] Inventory;
 
         public Player(int actorNumber, string name)

@@ -32,12 +32,21 @@ public class GameManager : Singleton<GameManager>
         _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
     }
 
+    public void DeliverSelectionArray(int[] selectionArr) => RPCPacketFactory.Create(PacketType.VoteConfirm, _actorNumber, selectionArr).Send();
+
+    public void DeliverSelectionArray(int actorNumber, int[] selectionArr)
+    {
+        if (!_players.TryGetValue(actorNumber, out var player))
+            return;
+        
+        //has ship ticket ±¸Çö.
+    }
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
 
     public void ClickArea(int actorNumber, int index)
     {
         if (!_players.TryGetValue(actorNumber, out Player player)) return;
-
+        
         player.AreaIndex = index;
         player.hasSelected = true;
 

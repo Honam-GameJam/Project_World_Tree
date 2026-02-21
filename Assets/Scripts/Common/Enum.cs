@@ -17,5 +17,6 @@ namespace Game.Enum
         ChangeMoney,
         GetItem,
         Chat,
+        VoteConfirm,
     }
 }
