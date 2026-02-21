@@ -31,7 +31,7 @@ public class VoteConfirmPacket : RPCPacket
         if (!PhotonNetwork.IsMasterClient)
             return false;
 
-        if (!GameManager.Instance.FindPlayer(ActorNumber).isLeader) return false;
+        if (!GameManager.Instance.FindPlayer(ActorNumber).IsLeader) return false;
 
         return true;
     }
@@ -39,7 +39,7 @@ public class VoteConfirmPacket : RPCPacket
     public override void Response()
     {
         var player = GameManager.Instance.FindPlayer(ActorNumber);
-        player.hasShipTicket = true;
-        player.isLeader = false;
+        player.HasShipTicket = true;
+        player.IsLeader = false;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,14 +19,14 @@ public class TravelSelectionUI : PhaseUI
             int index = i;
             _areas[i].onClick.AddListener(() => GameManager.Instance.ClickArea(index));
         }
-
-        Init(GameManager.Instance.config.DefaultTravelSelectionTime);
     }
 
-    public void Init(float time)
+    public void OnEnable()
     {
-        _time = time;
+        _time = GameManager.Instance.Config.DefaultTravelSelectionTime;
+        _timer.text = Mathf.CeilToInt(_time).ToString();
         _isTimeOver = false;
+        GameManager.Instance.ClickArea(_areas.Count-1);
     }
 
     private void Update()

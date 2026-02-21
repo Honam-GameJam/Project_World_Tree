@@ -1,5 +1,4 @@
 using Game.Enum;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +25,7 @@ public class UIManager : Singleton<UIManager>
             if (ui is HUD)
             {
                 hud = Instantiate(ui as HUD);
-                GameManager.Instance.AddListener(Phase.Travel, true, () => gameObject.SetActive(true));
+                GameManager.Instance.AddListener(Phase.Travel, true, () =>  hud.gameObject.SetActive(true));
                 GameManager.Instance.AddListener(Phase.Travel, true, hud.ShowRound);
                 GameManager.Instance.AddListener(Phase.Vote, true, () => { if (true) hud.HideRound(); }); // 리더가 아니 때만 끔
                 GameManager.Instance.AddListener(Phase.VoteResult, false, hud.ShowRound);

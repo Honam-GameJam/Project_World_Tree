@@ -33,7 +33,7 @@ public class ItemSubmitPacket : RPCPacket
         
         var player = GameManager.Instance.FindPlayer(ActorNumber);
 
-        if (!player.hasShipTicket) return false;
+        if (!player.HasShipTicket) return false;
 
         Dictionary<int, int> count = new Dictionary<int, int>();
 
@@ -55,6 +55,9 @@ public class ItemSubmitPacket : RPCPacket
             count[item]--;
         }
 
+        GameManager.Instance.AddProducts(Items);
+
+
         return true;
     }
 
@@ -74,6 +77,6 @@ public class ItemSubmitPacket : RPCPacket
             }
         }
 
-        player.hasShipTicket = false;
+        player.HasShipTicket = false;
     }
 }

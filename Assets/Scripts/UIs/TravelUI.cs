@@ -22,7 +22,7 @@ public class TravelUI : PhaseUI
             _options[index].onClick.AddListener(() => SelectOption(index));
         }
 
-        Init(GameManager.Instance.config.DefaultTravelTime);
+        Init(GameManager.Instance.Config.DefaultTravelTime);
     }
 
     public void Init(float time)
@@ -68,6 +68,7 @@ public class TravelUI : PhaseUI
     public void SelectOption(int index)
     {
         GameManager.Instance.SelectOption(index);
+
         GameManager.Instance.AsyncPhase();
     }
 }

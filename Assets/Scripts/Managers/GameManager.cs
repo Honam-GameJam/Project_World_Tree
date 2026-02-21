@@ -4,6 +4,7 @@ using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Photon.Pun.Demo.Shared.DocLinks;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -13,6 +14,7 @@ public class GameManager : Singleton<GameManager>
 
     //Master Client
     private Dictionary<int, Player> _players = new();
+    private Dictionary<int, int> _products = new();
 
     public IReadOnlyCollection<Player> Players => _players.Values;
     public Player Player => _players[_actorNumber];
@@ -20,12 +22,22 @@ public class GameManager : Singleton<GameManager>
 
     private int _actorNumber;
 
+    private int _travelCount;
+    public bool _mustTravel => _travelCount < Config.TravelCycle;
     public int Round { get; private set; }
-    public ConfigSO config;
+    public ItemSO Items;
+    public ConfigSO Config;
 
     private void Awake()
     {
-        config = Resources.Load<ConfigSO>("SOs/ConfigSO");
+        Items = Resources.Load<ItemSO>("SOs/ItemSO");
+        Config = Resources.Load<ConfigSO>("SOs/ConfigSO");
+    }
+
+    private void Start()
+    {
+        AddListener(Phase.TravelSelection, true, () => _travelCount++);
+        AddListener(Phase.Vote, true, () => _travelCount = 0);
     }
 
     public void InitPlayers()
@@ -45,7 +57,7 @@ public class GameManager : Singleton<GameManager>
     public void ClickArea(int index) => RPCPacketFactory.Create(PacketType.TravelSelection, _actorNumber, index).Send();
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
     public void SubmitItem() => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, Player.Ship).Send();
-    public void SelectOption(int index) => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, index).Send();
+    public void SelectOption(int index) => RPCPacketFactory.Create(PacketType.GetItem, _actorNumber, index).Send();
     public void AsyncPhase() => RPCPacketFactory.Create(PacketType.AsyncPhase, _actorNumber).Send();
 
     public void ClickItem(int index, bool isInventory)
@@ -95,19 +107,42 @@ public class GameManager : Singleton<GameManager>
 
         if (selected) { } //바로 시작?
     }
-
     public void SetPhase(Phase phase)
     {
         if (_phaseEvents.TryGetValue((Phase, false), out Action entry))
         {
-            entry.Invoke();
+            entry?.Invoke();
         }
 
         Phase = phase;
 
-        if (_phaseEvents.TryGetValue((phase, true), out entry))
+        if (_phaseEvents.TryGetValue((Phase, true), out entry))
         {
-            entry.Invoke();
+            entry?.Invoke();
+        }
+    }
+
+    public void AddProducts(int[] products)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        foreach (int product in products)
+        {
+            if (!_products.ContainsKey(product))
+                _products[product] = 0;
+
+            _products[product]++;
+        }
+    }
+
+    public void CaculateMoney()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        int v = 0;
+        foreach ((int id, int count) in _products)
+        {
+            v += Items.GetItem(id).Value * count;
         }
     }
 
@@ -116,11 +151,11 @@ public class GameManager : Singleton<GameManager>
         if (_phaseEvents.TryGetValue((phase, onEntered), out Action entry))
         {
             entry += action;
+            _phaseEvents[(phase, onEntered)] = entry;
         }
         else
         {
-            entry = action;
-            _phaseEvents.Add((phase, onEntered), entry);
+            _phaseEvents.Add((phase, onEntered), action);
         }
     }
 
@@ -129,6 +164,7 @@ public class GameManager : Singleton<GameManager>
         if (_phaseEvents.TryGetValue((phase, onEntered), out Action entry))
         {
             entry -= action;
+            _phaseEvents[(phase, onEntered)] = entry;
         }
     }
 }

@@ -1,5 +1,4 @@
 using Game.Enum;
-using NUnit.Framework;
 
 public static class RPCPacketFactory
 {
@@ -30,6 +29,16 @@ public static class RPCPacketFactory
             case PacketType.AsyncPhase:
                 return new AsyncPhasePacket(
                     (int)parameters[0]);
+
+            case PacketType.GetItem:
+                return new GetItemPacket(
+                    (int)parameters[0],
+                    (int)parameters[1]);
+
+            case PacketType.GiveItem:
+                return new GiveItemPacket(
+                    (int)parameters[0],
+                    (int[])parameters[1]);
         }
 
         return null;

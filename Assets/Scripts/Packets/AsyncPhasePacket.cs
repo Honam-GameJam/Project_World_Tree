@@ -28,11 +28,11 @@ public class AsyncPhasePacket : RPCPacket
     {
         if (!PhotonNetwork.IsMasterClient) return false;
 
-        GameManager.Instance.FindPlayer(ActorNumber).isActionFinished = true;
+        GameManager.Instance.FindPlayer(ActorNumber).IsActionFinished = true;
 
         foreach (var player in GameManager.Instance.Players)
         {
-            if (player.isActionFinished == false) return false;
+            if (player.IsActionFinished == false) return false;
         }
 
         return true;
@@ -40,14 +40,14 @@ public class AsyncPhasePacket : RPCPacket
 
     public override void Response()
     {
-        GameManager.Instance.Player.isActionFinished = false;
+        GameManager.Instance.Player.IsActionFinished = false;
 
         var phase = GameManager.Instance.Phase;
         Phase nextPhase = phase switch {
             Phase.InLobby => Phase.TravelSelection,
             Phase.TravelSelection => Phase.Travel,
             Phase.Travel => Phase.GoHome,
-            Phase.GoHome => GameManager.Instance.Round < 5 ? Phase.TravelSelection : Phase.Vote,
+            Phase.GoHome => GameManager.Instance._mustTravel ? Phase.TravelSelection : Phase.Vote,
             Phase.Vote => Phase.VoteResult,
             Phase.VoteResult => Phase.Feed,
             Phase.Feed => Phase.GameResult,

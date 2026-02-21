@@ -31,9 +31,19 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void UpdateItem(int itemId)
     {
         _itemId = itemId;
-        if (itemId != -1) _isEmpty = false;
 
-        _icon.gameObject.SetActive(!_isEmpty);
+        if (itemId == -1)
+        {
+            _isEmpty = true;
+            _icon.gameObject.SetActive(false);
+        }
+        else
+        {
+            var item = GameManager.Instance.Items.GetItem(itemId);
+            _isEmpty = false;
+            _icon.sprite = item.Sprite;
+            _icon.gameObject.SetActive(true);
+        }
     }
 
     public void SetInteractable(bool isInteractable)

@@ -49,7 +49,7 @@ public class HUD : UIBase
     public void UpdateIcon() => _icon.sprite = GameManager.Instance.Player.Icon;
     public void UpdateName() => _name.text = GameManager.Instance.Player.Name;
     public void UpdateMoney() => _money.text = GameManager.Instance.Player.Money.ToString();
-    public void UpdateRound() => _round.text = $"게임 라운드 [{GameManager.Instance.Round}/{GameManager.Instance.config.Round}]";
+    public void UpdateRound() => _round.text = $"게임 라운드 [{GameManager.Instance.Round}/{GameManager.Instance.Config.Round}]";
     public void HideRound() => _round.gameObject.SetActive(false);
     public void ShowRound() => _round.gameObject.SetActive(true);
     public void UpdateInventory()
