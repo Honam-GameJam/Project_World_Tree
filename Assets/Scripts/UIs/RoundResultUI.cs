@@ -23,7 +23,7 @@ public class RoundResultUI : PhaseUI
         _round.text = $"{GameManager.Instance.Round}라운드 종료";
 
         var players = GameManager.Instance.Players.ToList();
-        players.Sort();
+        players.Sort((a,b) => (b.Money - a.Money));
 
         int i = 0;
         foreach (var player in players)
@@ -38,6 +38,7 @@ public class RoundResultUI : PhaseUI
 
             if (delta == 0)
             {
+                _deltas[i].text = "";
                 _deltas[i].gameObject.SetActive(false);
             }
 
