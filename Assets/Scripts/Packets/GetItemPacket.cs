@@ -37,14 +37,14 @@ public class GetItemPacket : RPCPacket
 
         if (player.AreaIndex == 4) // ÈÞ½Ä
         {
-            GameManager.Instance.ChangeMoney(1);
+            RPCPacketFactory.Create(PacketType.ChangeMoney, player.ActorNumber, 1).Send();
             return false;
         }
 
         int itemSize = Index == 0 ? 1 : 2;
         if (Index == 1) {
             if (player.Money < 2) return false;
-            GameManager.Instance.ChangeMoney(-2);
+                RPCPacketFactory.Create(PacketType.ChangeMoney, player.ActorNumber, -2).Send();
         }
 
         int empty = 6;

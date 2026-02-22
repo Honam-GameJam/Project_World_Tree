@@ -7,6 +7,7 @@ public class VoteResultUI : PhaseUI
     [SerializeField] private List<PlayerProfile> _playerInfos;
     private WaitForSeconds delay = new WaitForSeconds(5f);
 
+
     private void OnEnable()
     {
         StartCoroutine(nameof(NextPhase));
@@ -19,11 +20,16 @@ public class VoteResultUI : PhaseUI
         int i = 0;
         foreach (var player in GameManager.Instance.Players)
         {
-            if (!player.HasShipTicket) continue;
+            if (!player.HasShipTicket)
+            {
+                i++;
+                continue;
+            }
 
             _playerInfos[i].UpdateIcon(player.Icon);
             _playerInfos[i].UpdateName(player.Name);
             _playerInfos[i].gameObject.SetActive(true);
+            i++;
         }
     }
 

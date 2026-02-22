@@ -30,16 +30,22 @@ public class VoteConfirmPacket : RPCPacket
     {
         if (!PhotonNetwork.IsMasterClient)
             return false;
-
-        if (!GameManager.Instance.FindPlayer(ActorNumber).IsLeader) return false;
+        var player = GameManager.Instance.FindPlayer(ActorNumber);
+        if (!player.IsLeader) return false;
+        else player.IsLeader = false;
 
         return true;
     }
 
     public override void Response()
     {
-        var player = GameManager.Instance.FindPlayer(ActorNumber);
-        player.HasShipTicket = true;
-        player.IsLeader = false;
+        foreach (var player in GameManager.Instance.Players) {
+            foreach (int id in SelectionArr) {
+                if (player.ActorNumber == id)
+                {
+                    player.HasShipTicket = true;
+                }
+            }
+        }
     }
 }

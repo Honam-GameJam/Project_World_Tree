@@ -41,12 +41,12 @@ public class GameManager : Singleton<GameManager>
         AddListener(Phase.GoHome, true, () => _travelCount++);
         AddListener(Phase.Vote, true, () => _travelCount = 0);
         AddListener(Phase.Calculate, true, CaculateMoney);
-        AddListener(Phase.RoundResult, false, () => { Benefits.Clear(); Shippers.Clear(); Round++; SetLeader(); });
+        AddListener(Phase.RoundResult, false, () => { Benefits.Clear(); Shippers.Clear(); Round++; SetLeader(); UIManager.Instance.hud.Init(); });
     }
 
     public void InitPlayers()
     {
-        foreach(var p in PhotonNetwork.CurrentRoom.Players.Values)
+        foreach (var p in PhotonNetwork.CurrentRoom.Players.Values)
         {
             var player = new Player(p.ActorNumber, p.NickName, Config.DefaultMoney);
             _players[p.ActorNumber] = player;
@@ -75,7 +75,7 @@ public class GameManager : Singleton<GameManager>
         {
             int maxMoney = -1;
 
-            foreach(var player in Players)
+            foreach (var player in Players)
             {
                 if (maxMoney < player.Money) {
                     leader = player.ActorNumber;
@@ -95,7 +95,7 @@ public class GameManager : Singleton<GameManager>
     public void SendChat(string chat) => RPCPacketFactory.Create(PacketType.Chat, _actorNumber, chat).Send();
     public void SubmitItem() => RPCPacketFactory.Create(PacketType.ItemSubmit, _actorNumber, Player.Ship).Send();
     public void SelectOption(int index) => RPCPacketFactory.Create(PacketType.GetItem, _actorNumber, index).Send();
-    public void AsyncPhase() => RPCPacketFactory.Create(PacketType.AsyncPhase, _actorNumber).Send();
+    public void AsyncPhase() { RPCPacketFactory.Create(PacketType.AsyncPhase, _actorNumber).Send(); }
 
     public void ClickItem(int index, bool isInventory)
     {

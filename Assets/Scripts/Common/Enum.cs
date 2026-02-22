@@ -12,6 +12,8 @@ namespace Game.Enum
         RoundResult,
         GameResult,
         Calculate,
+        VoteWait,
+        FeedWait,
     }
 
     public enum PacketType

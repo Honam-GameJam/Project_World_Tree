@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::ConfigSO
   <DefaultMoney>k__BackingField: 10
-  <DefaultTravelSelectionTime>k__BackingField: 2
+  <DefaultTravelSelectionTime>k__BackingField: 10
   <DefaultTravelTime>k__BackingField: 30
-  <Round>k__BackingField: 2
+  <Round>k__BackingField: 5
   <TravelCycle>k__BackingField: 2
   <MaxPlayer>k__BackingField: 6
   <VotedPlayer>k__BackingField: 4
