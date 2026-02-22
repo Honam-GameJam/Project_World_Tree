@@ -24,14 +24,9 @@ public class MemberSelectionUI : PhaseUI
             _playerInfos[i].UpdateIcon(player.Icon);
             _playerInfos[i].UpdateName(player.Name);
             _playerInfos[i].UpdateMoney(player.Money);
+            _playerInfos[i].Button.onClick.AddListener(() => SelectionArray(player.ActorNumber));
 
             i++;
-        }
-
-        for (i = 0; i < playerSize; i++)
-        {
-            int index = i;
-            _playerInfos[i].Button.onClick.AddListener(() => SelectionArray(index));
         }
 
         _confirmBtn.onClick.AddListener(Confirm);
@@ -41,9 +36,13 @@ public class MemberSelectionUI : PhaseUI
     {
         selectionCnt = 0;
         selectionArr = new int[GameManager.Instance.Config.VotedPlayer];
-        UpdateCount();
 
-        if (!GameManager.Instance.Player.IsLeader) GameManager.Instance.AsyncPhase();
+        for(int i = 0; i < selectionArr.Length; i++)
+        {
+            selectionArr[i] = -1;
+        }
+
+        UpdateCount();
     }
 
     public void SelectionArray(int index)

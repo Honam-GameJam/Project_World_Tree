@@ -34,7 +34,11 @@ public class RoundResultUI : PhaseUI
             _players[i].gameObject.SetActive(true);
             i++;
 
-            var delta = GameManager.Instance.Benefits[player.ActorNumber];
+            int delta = 0;
+            if (GameManager.Instance.Benefits.Keys.Contains(player.ActorNumber))
+            {
+                delta = GameManager.Instance.Benefits[player.ActorNumber];
+            }
 
             if (delta == 0)
             {
